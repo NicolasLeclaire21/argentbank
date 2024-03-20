@@ -1,78 +1,77 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { updateUser } from "../../app/actions";
+import { changeName } from "../../app/store";
+import { editNamesAction } from "../../app/store";
 
 function UserHeader() {
-  const user = useSelector((state) => state.userReducer.user);
-  const [editName, setEditName] = useState(false);
-  const [username, setUsername] = useState(user.username || "");
+      const firstName = useSelector((state) => state.auth.firstName);
+      const lastName = useSelector((state) => state.auth.lastName);
+      const userName = useSelector((state) => state.auth.userName);
+      const isLoggedIn = useSelector((state) => state.isLoggedIn);
+      const isNameEdited = useSelector((state) => state.isNameEdited);
   const dispatch = useDispatch();
 
-  const changeName = (e) => {
-    e.preventDefault();
-    const updatedUser = {
-      firstName: "",
-      lastName: "",
-      userName: username
-    };
-    dispatch({
-      type: "UPDATE_USER", 
-     user: updatedUser});
-    setEditName(false);
-  };
-
-  const cancel = (e) => {
-    e.preventDefault();
-    setEditName(false);
-  };
 
   return (
-    <div className="header">
-      <h1>
-        Welcome back
-        <br />
-        <span className={editName ? "sr-only" : ""}>
-          {user.firstName + " " + user.lastName + " !"}
-        </span>
-      </h1>
-      <button
-        className={"edit-button " + (editName ? "sr-only" : "")}
-        onClick={() => setEditName(!editName)}
-      >
-        Edit Name
-      </button>
-      <form className={"edit-profile" + (editName ? "" : " sr-only")}>
-        <div className="edit-username">
-          <input
-            type="text"
-            value={username}
-            placeholder="Username"
-            onChange={(e) => setUsername(e.target.value.toLowerCase())}
-          />
-        </div>
-        <div className="edit-firstName">
-          <input
-            type="text"
-            value={user.firstName}
-            readOnly
-          />
-        </div>
-        <div className="edit-lastName">
-          <input
-            type="text"
-            value={user.lastName}
-            readOnly 
-          />
-        </div>
-        <button className="edit-button" onClick={(e) => changeName(e)}>
-          Save
-        </button>
-        <button className="edit-button" onClick={(e) => cancel(e)}>
-          Cancel
-        </button>
-      </form>
-    </div>
-  );
+   <div className="welcome_wrapper">
+      <h1 className="welcome_text">Welcome back</h1>
+      {isNameEdited ? (
+         <div>
+            <div className="input_name_wrapper">
+               <input
+                  className="input_name"
+                  type="text"
+                  id="username"
+                  defaultValue={userName}
+               />
+               <input
+                  className="input_name"
+                  type="text"
+                  id="firstname"
+                  Value={firstName}
+                  readOnly
+               />
+               <input
+                  className="input_name"
+                  type="text"
+                  id="lastname"
+                  Value={lastName}
+                  readOnly
+               />
+            </div>
+            <div className="button_wrapper">
+            <button 
+               className="edit-button" 
+               onClick={() => {
+                  dispatch(changeName());
+                  dispatch(editNamesAction());
+               }}
+               >
+               Save
+            </button>
+               <button className="edit-button"               
+               onClick={() => dispatch(editNamesAction())}
+               >
+                Cancel
+              </button>
+            </div>
+         </div>
+      ) : (
+         <div>
+            <h1 className="name_text">
+               { firstName + ' ' + lastName + '!'}
+            </h1>
+            <button
+              className="edit-button"
+              onClick={() => dispatch(editNamesAction())}
+            >
+              Edit Name
+            </button>
+         </div>
+      )}
+   </div>
+  )
 }
+
 
 export default UserHeader;
