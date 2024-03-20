@@ -11,7 +11,7 @@ const initialState = {
       email: '',
       firstName: '',
       lastName: '',
-      userName: '',
+      userName: '', // Nouvelle donnée
       token: ''
    },
    isLoggedIn: false,
@@ -19,9 +19,10 @@ const initialState = {
    isNameEdited: false
 };
 
+
 // --------------- ACTIONS ---------------
 
-export function loginAction(navigate) {
+export function login(navigate) {
    return (dispatch) => {
       const email = document.getElementById('email').value;
       const password = document.getElementById('password').value;
@@ -54,25 +55,25 @@ export function loginAction(navigate) {
             }
          })
          .then(response => {
-            dispatch(loginSuccessAction(response.body, token));
+            dispatch(loginSuccess(response.body, token));
             navigate("/profile");
          })
          .catch(function(error) {
-            dispatch(loginFailureAction(error));
+            dispatch(loginFail(error));
          })
       })
       .catch(function(error) {
-         dispatch(loginFailureAction(error));
+         dispatch(loginFail(error));
       })
    }
 }
 
-export function loginSuccessAction(body, token) {
+export function loginSuccess(body, token) {
    localStorage.setItem('id', body.id);
    localStorage.setItem('email', body.email);
    localStorage.setItem('firstName', body.firstName);
    localStorage.setItem('lastName', body.lastName);
-   localStorage.setItem('userName', body.userName);
+   localStorage.setItem('userName', body.userName); // Nouvelle donnée
    localStorage.setItem('token', token);
    return {
       type: "LOGIN_SUCCESS_ACTION",
@@ -80,21 +81,21 @@ export function loginSuccessAction(body, token) {
    }
 }
 
-export function loginFailureAction(error) {
+export function loginFail(error) {
    console.log("Error at fetch:", error.message);
    return {
       type: "LOGIN_FAILURE_ACTION"
    }
 }
 
-export function logoutAction() {
+export function logout() {
    localStorage.clear();
    return {
       type: "LOGOUT_ACTION"
    }
 }
 
-export function editNamesAction() {
+export function editName() {
    return {
       type: "EDIT_NAMES_ACTION"
    }
@@ -105,8 +106,8 @@ export function changeName() {
 
       const firstName = document.getElementById('firstname').value;
       const lastName = document.getElementById('lastname').value;
-      const userName = document.getElementById('username').value;
-      const body = JSON.stringify({ 'firstName': firstName, 'lastName': lastName, 'username': userName });
+      const userName = document.getElementById('username').value; // Nouvelle donnée
+      const body = JSON.stringify({ 'firstName': firstName, 'lastName': lastName, 'userName': userName }); // Nouvelle donnée
       const token = localStorage.getItem('token');
 
       // Put on /user/profile to update the user names
@@ -126,11 +127,11 @@ export function changeName() {
       .then(data => {
          dispatch({
             type: "CHANGE_NAMES_ACTION",
-            payload: { firstName, lastName, userName }
+            payload: { firstName, lastName, userName } // Nouvelle donnée
          })
          localStorage.setItem('firstName', firstName);
          localStorage.setItem('lastName', lastName);
-         localStorage.setItem('userName', userName)
+         localStorage.setItem('userName', userName); // Nouvelle donnée
       })
       .catch(function(error) {
          console.log("Error at fetch:" + error.message);
@@ -152,7 +153,7 @@ function reducer(state = initialState, action) {
                email: action.payload.body.email,
                firstName: action.payload.body.firstName,
                lastName: action.payload.body.lastName,
-               userName: action.payload.body.userName,
+               userName: action.payload.body.userName, // Nouvelle donnée
                token: action.payload.token,
             },
             isLoggedIn: true,
@@ -181,7 +182,7 @@ function reducer(state = initialState, action) {
                ...state.auth,
                firstName: action.payload.firstName,
                lastName: action.payload.lastName,
-               userName: action.payload.userName
+               userName: action.payload.userName // Nouvelle donnée
             }
          }
       }

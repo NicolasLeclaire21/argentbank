@@ -2,10 +2,8 @@ import iconChat from '../../components/featureItem/icon-chat.png'
 import iconMoney from '../../components/featureItem/icon-money.png'
 import iconSecurity from '../../components/featureItem/icon-security.png'
 import './home.css'
-import Navigation from '../../components/navigation';
 import Banner from '../../components/banner';
 import FeatureItem from '../../components/featureItem';
-import Footer from '../../components/footer';
 
 function Home() {
 
@@ -26,7 +24,6 @@ function Home() {
 
   return (
     <div className="home">
-        <Navigation />
         <main>
             <Banner />
             <section className='features'>
@@ -47,7 +44,6 @@ function Home() {
                  />
             </section>
         </main>
-        <Footer/>
     </div>
   );
 }

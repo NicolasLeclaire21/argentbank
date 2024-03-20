@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { useDispatch } from 'react-redux';import { logoutAction } from '../../app/store';
+import { useDispatch } from 'react-redux';import { logout } from '../../app/store';
 import logo from './argentBankLogo.png'
 import './navigation.css'
 import { Link } from 'react-router-dom'
@@ -32,7 +32,7 @@ function Navigation() {
                   className="logout_link"
                   to="/"
                   onClick={() => {
-                      dispatch(logoutAction());
+                      dispatch(logout());
                   }}
                 >
                   <i className="fa fa-sign-out"></i>

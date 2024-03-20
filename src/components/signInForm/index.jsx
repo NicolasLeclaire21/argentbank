@@ -1,9 +1,8 @@
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { loginAction } from '../../app/store';
-import { useState } from "react";
-import UserHeader from "../userHeader";
+import { login } from '../../app/store';
 import { useSelector } from 'react-redux';
+import './signInForm.css'
 
 
 function SignInForm() {
@@ -41,7 +40,7 @@ function SignInForm() {
          className="login_button"
          onClick={(e) => {
             e.preventDefault();
-            dispatch(loginAction(navigate));
+            dispatch(login(navigate));
          }}
       >
          Sign In

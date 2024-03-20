@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { changeName } from "../../app/store";
-import { editNamesAction } from "../../app/store";
+import { editName } from "../../app/store";
 
 function UserHeader() {
       const firstName = useSelector((state) => state.auth.firstName);
@@ -44,13 +44,13 @@ function UserHeader() {
                className="edit-button" 
                onClick={() => {
                   dispatch(changeName());
-                  dispatch(editNamesAction());
+                  dispatch(editName());
                }}
                >
                Save
             </button>
                <button className="edit-button"               
-               onClick={() => dispatch(editNamesAction())}
+               onClick={() => dispatch(editName())}
                >
                 Cancel
               </button>
@@ -63,7 +63,7 @@ function UserHeader() {
             </h1>
             <button
               className="edit-button"
-              onClick={() => dispatch(editNamesAction())}
+              onClick={() => dispatch(editName())}
             >
               Edit Name
             </button>
