@@ -9,4 +9,24 @@
     color: #fff;
     font-weight: bold;
     padding: 10px;
+    margin: 10px;
+}
+
+.input-name-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.input-name {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 20px;
+    gap: 8px;
+    margin-bottom: 10px;
+}
+
+.input {
+    border-radius: 5px;
 }

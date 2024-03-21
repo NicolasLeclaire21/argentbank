@@ -11,14 +11,13 @@ const initialState = {
       email: '',
       firstName: '',
       lastName: '',
-      userName: '', // Nouvelle donnée
+      userName: '',
       token: ''
    },
    isLoggedIn: false,
    hasLoginFailed: false,
    isNameEdited: false
 };
-
 
 // --------------- ACTIONS ---------------
 
@@ -28,7 +27,6 @@ export function login(navigate) {
       const password = document.getElementById('password').value;
       const body = JSON.stringify({ 'email': email, 'password': password });
 
-      // Post on /user/login to get the token
       fetch('http://localhost:3001/api/v1/user/login', {
          body: body,
          headers : { 'Content-Type': 'application/json' },
@@ -41,7 +39,7 @@ export function login(navigate) {
       })
       .then(response => {
          const token = response.body.token;
-         // Post on /user/profile to get user data with the found token
+         // POST pour obtenir la data utilisateur une fois connecté
          fetch("http://localhost:3001/api/v1/user/profile", {
             headers: {
                'Authorization': 'Bearer' + response.body.token,
@@ -73,44 +71,42 @@ export function loginSuccess(body, token) {
    localStorage.setItem('email', body.email);
    localStorage.setItem('firstName', body.firstName);
    localStorage.setItem('lastName', body.lastName);
-   localStorage.setItem('userName', body.userName); // Nouvelle donnée
+   localStorage.setItem('userName', body.userName);
    localStorage.setItem('token', token);
    return {
-      type: "LOGIN_SUCCESS_ACTION",
+      type: "LOGIN_SUCCESS",
       payload: { body, token }
    }
 }
 
 export function loginFail(error) {
-   console.log("Error at fetch:", error.message);
+   console.log("Error :", error.message);
    return {
-      type: "LOGIN_FAILURE_ACTION"
+      type: "LOGIN_FAIL"
    }
 }
 
 export function logout() {
    localStorage.clear();
    return {
-      type: "LOGOUT_ACTION"
+      type: "LOGOUT"
    }
 }
 
 export function editName() {
    return {
-      type: "EDIT_NAMES_ACTION"
+      type: "EDIT_NAME"
    }
 }
 
-export function changeName() {
+export function changeUsername() {
    return (dispatch) => {
 
-      const firstName = document.getElementById('firstname').value;
-      const lastName = document.getElementById('lastname').value;
-      const userName = document.getElementById('username').value; // Nouvelle donnée
-      const body = JSON.stringify({ 'firstName': firstName, 'lastName': lastName, 'userName': userName }); // Nouvelle donnée
+      const userName = document.getElementById('username').value;
+      const body = JSON.stringify({ 'userName': userName });
       const token = localStorage.getItem('token');
 
-      // Put on /user/profile to update the user names
+      // Update du username
       fetch("http://localhost:3001/api/v1/user/profile", {
          body: body,
          headers: {
@@ -126,12 +122,10 @@ export function changeName() {
       })
       .then(data => {
          dispatch({
-            type: "CHANGE_NAMES_ACTION",
-            payload: { firstName, lastName, userName } // Nouvelle donnée
+            type: "CHANGE_NAME",
+            payload: { userName } 
          })
-         localStorage.setItem('firstName', firstName);
-         localStorage.setItem('lastName', lastName);
-         localStorage.setItem('userName', userName); // Nouvelle donnée
+         localStorage.setItem('userName', userName);
       })
       .catch(function(error) {
          console.log("Error at fetch:" + error.message);
@@ -144,7 +138,7 @@ export function changeName() {
 
 function reducer(state = initialState, action) {
    switch (action.type) {
-      case "LOGIN_SUCCESS_ACTION": {
+      case "LOGIN_SUCCESS": {
          return {
             ...state,
             auth: {
@@ -153,36 +147,34 @@ function reducer(state = initialState, action) {
                email: action.payload.body.email,
                firstName: action.payload.body.firstName,
                lastName: action.payload.body.lastName,
-               userName: action.payload.body.userName, // Nouvelle donnée
+               userName: action.payload.body.userName,
                token: action.payload.token,
             },
             isLoggedIn: true,
             hasLoginFailed: false
          }
       }
-      case "LOGIN_FAILURE_ACTION": {
+      case "LOGIN_FAIL": {
          return {
             ...state,
             hasLoginFailed: true
          }
       }
-      case "LOGOUT_ACTION": {
+      case "LOGOUT": {
          return initialState
       }
-      case "EDIT_NAMES_ACTION": {
+      case "EDIT_NAME": {
          return {
             ...state,
             isNameEdited: !state.isNameEdited
          }
       }
-      case "CHANGE_NAMES_ACTION": {
+      case "CHANGE_NAME": {
          return {
             ...state,
             auth: {
                ...state.auth,
-               firstName: action.payload.firstName,
-               lastName: action.payload.lastName,
-               userName: action.payload.userName // Nouvelle donnée
+               userName: action.payload.userName
             }
          }
       }
@@ -191,7 +183,7 @@ function reducer(state = initialState, action) {
    }
 }
 
-// To stay logged in when page refresh
+// Rester connecter quand la page refresh
 const persistConfig = {
   key: 'root',
   storage,

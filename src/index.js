@@ -14,13 +14,13 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <Provider store={store}>
      <Router>
-      <Navigation />
-            <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/login" element={<SignIn />} />
-                <Route path="/profile" element={<User />} />
-            </Routes>
-            <Footer />
+        <Navigation />
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/login" element={<SignIn />} />
+            <Route path="/profile" element={<User />} />
+          </Routes>
+        <Footer />
       </Router>
   </Provider>
 );

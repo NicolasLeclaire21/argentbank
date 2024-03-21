@@ -13,7 +13,7 @@ function Navigation() {
 
 
   return (
-    <nav className="main-nav">
+    <header className="main-nav">
         <Link className="main-nav-logo" to="/">
         <img
           className="main-nav-logo-image"
@@ -24,19 +24,19 @@ function Navigation() {
         </Link>
         {isLoggedIn ? (
             <nav className="nav">
-               <Link className="nav_item" to="/profile">
+               <Link className="main-nav-item" to="/profile">
                   <i className="fa fa-user-circle"></i>
-                  <p className="nav_item_text">{userName}</p>
+                  {userName}
                </Link>
                <Link
-                  className="logout_link"
+                  className="main-nav-item"
                   to="/"
                   onClick={() => {
                       dispatch(logout());
                   }}
                 >
                   <i className="fa fa-sign-out"></i>
-                  <p className="logout_link_text">Sign Out</p>
+                  Sign Out
               </Link>
             </nav>
         ) : (
@@ -47,7 +47,7 @@ function Navigation() {
         </Link>
         </div>
         )}
-    </nav>
+    </header>
   );
 }
 
