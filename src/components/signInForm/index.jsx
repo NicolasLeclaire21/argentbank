@@ -1,6 +1,6 @@
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { login } from '../../app/store';
+import { login } from '../../store/store';
 import { useSelector } from 'react-redux';
 import './signInForm.css'
 

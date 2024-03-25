@@ -1,70 +1,90 @@
-# Getting Started with Create React App
+# Argent Bank
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Argent Bank is a bank service allowing customers to login on their website and to manage their bank accounts and their profile.
 
-## Available Scripts
+**Goal of this project**: API integration in a React app, use of Redux for global state management, and creation of future endpoints with Swagger.
 
-In the project directory, you can run:
+## Load specifications
 
-### `npm start`
+### Website designs
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Static HTML and CSS were provided [here](https://github.com/OpenClassrooms-Student-Center/Project-10-Bank-API/tree/master/designs).
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+![Design for the home page](./src/assets/design/homepage.png "Design for the home page")
 
-### `npm test`
+## Features
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+-   Users are able to navigate to the home page (`/`).
+-   Users can go to the login page (`/login`), fill out credentials, login to the back-end API with JWT tokens for authentication, and then successfully navigate to their profile page (`/profile`).
+-   Users can see their username and the logout button in header when they're logged in. If they click on the logout button, they go back to the home page (`/`).
+-   After succesfully logging in, users can see their profile page with their username, and see placeholder bank account information.
+-   Users can be able to edit their profile (first name and last name not editable. Only username can be changed). This data should be persisted to the database.
 
-### `npm run build`
+### Technical constraints
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+-   Application creation with React (from static HTML and CSS).
+-   Use of React Router.
+-   Implementation of Redux to manage application global state (with actions to send information and fetch from API, reducer to handle application state changes, store to manage all data).
+-   Creation of future API endpoints (with HTTP methods, routes, description, parameters, and types of responses) for future features with Swagger (in `swagger.yaml`):
+    -   See all transactions for the current month.
+    -   See transaction details in a new view.
+    -   Add, remove or update informations on a given transaction.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Prerequisites
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+-   [NodeJS](https://nodejs.org/en/)
+-   [MongoDB Community Server](https://www.mongodb.com/try/download/community)
+-   [npm](https://www.npmjs.com/)
+-   [Yarn](https://yarnpkg.com/)
+-   [React](https://fr.reactjs.org/)
+-   [React Router](https://reactrouter.com/)
+-   [React Redux](https://react-redux.js.org/)
+-   [Redux](https://redux.js.org/)
+-   [Redux Persist](https://www.npmjs.com/package/redux-persist)
+-   [Redux Toolkit](https://redux-toolkit.js.org/)
 
-### `npm run eject`
+## Installation
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### Back-end
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+#### Back-end repository
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+The back-end repository using NodeJS is available on [this link](https://github.com/OpenClassrooms-Student-Center/ArgentBank-website).
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+1. Clone the repository
 
-## Learn More
+2. Install the dependencies
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+```sh
+npm install
+```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+3. Start the local development server
 
-### Code Splitting
+```sh
+npm run dev:server
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+4. Populate MongoDB database
 
-### Analyzing the Bundle Size
+```sh
+npm run populate-db
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+#### Populated users
 
-### Making a Progressive Web App
+There are now two users in the MongoDB database:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+1. Tony Stark
 
-### Advanced Configuration
+-   First Name: `Tony`
+-   Last Name: `Stark`
+-   Email: `tony@stark.com`
+-   Password: `password123`
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+2. Steve Rogers
 
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+-   First Name: `Steve`
+-   Last Name: `Rogers`
+-   Email: `steve@rogers.com`
+-   Password: `password456`

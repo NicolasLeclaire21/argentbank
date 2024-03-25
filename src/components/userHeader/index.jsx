@@ -1,7 +1,7 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { changeUsername } from "../../app/store";
-import { editName } from "../../app/store";
+import { changeUsername } from "../../store/store";
+import { editName } from "../../store/store";
 import './userHeader.css'
 
 function UserHeader() {

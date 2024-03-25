@@ -1,0 +1,310 @@
+swagger: "2.0"
+info:
+    title: ArgentBank API documentation
+    description: Contains API endpoints for the new transaction feature (added to the previously described endpoints)
+    version: "1.1.0"
+    termsOfService: "http://swagger.io/terms/"
+host: localhost:3001
+basePath: /api/v2
+schemes:
+    - http
+
+paths:
+    /user/accounts:
+        get:
+            security:
+                - Bearer: []
+            tags:
+                - User Module
+            summary: User Accounts API
+            description: API for fetching user accounts
+            parameters:
+                - in: header
+                  name: Authorization
+                  description: Attach Bearer JWT token
+                  type: string
+                  required: true
+            produces:
+                - application/json
+            responses:
+                "200":
+                    description: User accounts retrieved successully
+                    schema:
+                        $ref: "#/definitions/AccountsResponse"
+                "400":
+                    description: Invalid Fields
+                "500":
+                    description: Internal Server Error
+
+    /user/account/{accountId}/transactions:
+        get:
+            security:
+                - Bearer: []
+            tags:
+                - User Module
+            summary: User Account Transactions API
+            description: API for fetching user transactions on a specific account
+            parameters:
+                - in: path
+                  name: accountId
+                  type: integer
+                  required: true
+                  description: Numeric ID of the account to get
+                - in: header
+                  name: Authorization
+                  description: Attach Bearer JWT token
+                  type: string
+                  required: true
+            produces:
+                - application/json
+            responses:
+                "200":
+                    description: User accounts retrieved successully
+                    schema:
+                        $ref: "#/definitions/AccountTransactionsResponse"
+                "400":
+                    description: Invalid Fields
+                "500":
+                    description: Internal Server Error
+
+    /user/account/{accountId}/transaction/{transactionId}:
+        get:
+            security:
+                - Bearer: []
+            tags:
+                - User Module
+            summary: User Transaction API
+            description: API for fetching a specific user transaction
+            parameters:
+                - in: path
+                  name: accountId
+                  type: integer
+                  required: true
+                  description: Numeric ID of the account to get
+                - in: path
+                  name: transactionId
+                  type: integer
+                  required: true
+                  description: Numeric ID of the transaction to get
+                - in: header
+                  name: Authorization
+                  description: Attach Bearer JWT token
+                  type: string
+                  required: true
+            produces:
+                - application/json
+            responses:
+                "200":
+                    description: User transaction retrieved successully
+                    schema:
+                        $ref: "#/definitions/TransactionResponse"
+                "400":
+                    description: Invalid Fields
+                "500":
+                    description: Internal Server Error
+        post:
+            security:
+                - Bearer: []
+            tags:
+                - User Module
+            summary: User Transaction API
+            description: API for adding details on a specific user transaction
+            parameters:
+                - in: path
+                  name: accountId
+                  type: integer
+                  required: true
+                  description: Numeric ID of the account to get
+                - in: path
+                  name: transactionId
+                  type: integer
+                  required: true
+                  description: Numeric ID of the transaction to get
+                - in: header
+                  name: Authorization
+                  description: Attach Bearer JWT token
+                  type: string
+                  required: true
+                - in: body
+                  name: body
+                  description: Add user transaction attributes
+                  required: true
+                  schema:
+                      $ref: "#/definitions/Transaction"
+            produces:
+                - application/json
+            responses:
+                "200":
+                    description: User transaction retrieved successully
+                    schema:
+                        $ref: "#/definitions/TransactionResponse"
+                "400":
+                    description: Invalid Fields
+                "500":
+                    description: Internal Server Error
+        put:
+            security:
+                - Bearer: []
+            tags:
+                - User Module
+            summary: User Transaction API
+            description: API for updating details on a specific user transaction
+            parameters:
+                - in: path
+                  name: accountId
+                  type: integer
+                  required: true
+                  description: Numeric ID of the account to get
+                - in: path
+                  name: transactionId
+                  type: integer
+                  required: true
+                  description: Numeric ID of the transaction to get
+                - in: header
+                  name: Authorization
+                  description: Attach Bearer JWT token
+                  type: string
+                  required: true
+                - in: body
+                  name: body
+                  description: Update user transaction attributes
+                  required: true
+                  schema:
+                      $ref: "#/definitions/Transaction"
+            produces:
+                - application/json
+            responses:
+                "200":
+                    description: User transaction retrieved successully
+                    schema:
+                        $ref: "#/definitions/TransactionResponse"
+                "400":
+                    description: Invalid Fields
+                "500":
+                    description: Internal Server Error
+        delete:
+            security:
+                - Bearer: []
+            tags:
+                - User Module
+            summary: User Transaction API
+            description: API for deleting details on a specific user transaction
+            parameters:
+                - in: path
+                  name: accountId
+                  type: integer
+                  required: true
+                  description: Numeric ID of the account to get
+                - in: path
+                  name: transactionId
+                  type: integer
+                  required: true
+                  description: Numeric ID of the transaction to get
+                - in: header
+                  name: Authorization
+                  description: Attach Bearer JWT token
+                  type: string
+                  required: true
+                - in: body
+                  name: body
+                  description: Add user transaction attributes
+                  required: true
+                  schema:
+                      $ref: "#/definitions/Transaction"
+            produces:
+                - application/json
+            responses:
+                "200":
+                    description: User transaction retrieved successully
+                    schema:
+                        $ref: "#/definitions/TransactionResponse"
+                "400":
+                    description: Invalid Fields
+                "500":
+                    description: Internal Server Error
+
+securityDefinitions:
+    Bearer:
+        type: apiKey
+        name: Authorization
+        in: header
+definitions:
+    Transaction:
+        properties:
+            category:
+                type: string
+                description: transaction category (to choose among several possibilities)
+            notes:
+                type: string
+                description: transaction notes by the user
+    AccountsResponse:
+        type: object
+        properties:
+            status:
+                type: integer
+            message:
+                type: string
+            body:
+                type: object
+                properties:
+                    checking:
+                        type: object
+                        properties:
+                            id:
+                                type: integer
+                            balance:
+                                type: number
+                    savings:
+                        type: object
+                        properties:
+                            id:
+                                type: integer
+                            balance:
+                                type: number
+                    creditcard:
+                        type: object
+                        properties:
+                            id:
+                                type: integer
+                            balance:
+                                type: number
+    AccountTransactionsResponse:
+        type: object
+        properties:
+            status:
+                type: integer
+            message:
+                type: string
+            body:
+                type: array
+                items:
+                    type: object
+                    properties:
+                        id:
+                            type: integer
+    TransactionResponse:
+        type: object
+        properties:
+            status:
+                type: integer
+            message:
+                type: string
+            body:
+                type: object
+                properties:
+                    id:
+                        type: integer
+                    date:
+                        type: string
+                    description:
+                        type: string
+                    amount:
+                        type: number
+                    balance:
+                        type: number
+                    type:
+                        type: string
+                    category:
+                        type: string
+                    note:
+                        type: string
