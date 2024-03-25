@@ -4,14 +4,6 @@ Argent Bank is a bank service allowing customers to login on their website and t
 
 **Goal of this project**: API integration in a React app, use of Redux for global state management, and creation of future endpoints with Swagger.
 
-## Load specifications
-
-### Website designs
-
-Static HTML and CSS were provided [here](https://github.com/OpenClassrooms-Student-Center/Project-10-Bank-API/tree/master/designs).
-
-![Design for the home page](./src/assets/design/homepage.png "Design for the home page")
-
 ## Features
 
 -   Users are able to navigate to the home page (`/`).
