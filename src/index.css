@@ -37,5 +37,5 @@ body {
 
 .bg-dark {
     background-color: #12002b;
-    height: 860px;
+    min-height: 860px;
 }
